@@ -3,16 +3,11 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
+import javax.swing.JOptionPane;
 
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
 import log.Logger;
 
@@ -44,9 +39,15 @@ public class MainApplicationFrame extends JFrame
         GameWindow gameWindow = new GameWindow();
         gameWindow.setSize(400,  400);
         addWindow(gameWindow);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exitApp();
+            }
+        });
 
         setJMenuBar(generateMenuBar());
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
     protected LogWindow createLogWindow()
@@ -135,8 +136,23 @@ public class MainApplicationFrame extends JFrame
             testMenu.add(addLogMessageItem);
         }
 
+        JMenu exitMenu = new JMenu("Закрыть");
+        exitMenu.setMnemonic(KeyEvent.VK_E);
+        testMenu.getAccessibleContext().setAccessibleDescription(
+                "Закрытие приложения");
+
+        {
+            JMenuItem exitAppItem = new JMenuItem("Закрыть приложение", KeyEvent.VK_ESCAPE);
+            exitAppItem.addActionListener((event) -> {
+                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
+                        new WindowEvent(this, WindowEvent.WINDOW_CLOSING));;
+            });
+            exitMenu.add(exitAppItem);
+        }
+
         menuBar.add(lookAndFeelMenu);
         menuBar.add(testMenu);
+        menuBar.add(exitMenu);
         return menuBar;
     }
     
@@ -152,5 +168,11 @@ public class MainApplicationFrame extends JFrame
         {
             // just ignore
         }
+    }
+
+    private void exitApp(){
+        Logger.debug("Выход");
+        JOptionPane confirmationPanel = new JOptionPane("Закрыть приложение?");
+        //System.exit(0);
     }
 }
