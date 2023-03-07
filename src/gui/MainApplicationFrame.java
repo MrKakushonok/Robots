@@ -171,8 +171,18 @@ public class MainApplicationFrame extends JFrame
     }
 
     private void exitApp(){
-        Logger.debug("Выход");
-        JOptionPane confirmationPanel = new JOptionPane("Закрыть приложение?");
-        //System.exit(0);
+        String[] options = {"Да", "Нет"};
+        int response = JOptionPane.showOptionDialog(this,
+                "Закрыть приложение?",
+                "Закрытие",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+        if(response == JOptionPane.YES_OPTION){
+            System.exit(0);
+        };
     }
 }
