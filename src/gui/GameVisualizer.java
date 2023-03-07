@@ -22,16 +22,18 @@ public class GameVisualizer extends JPanel
         Timer timer = new Timer("events generator", true);
         return timer;
     }
-    
-    private volatile double m_robotPositionX = 100;
-    private volatile double m_robotPositionY = 100; 
-    private volatile double m_robotDirection = 0; 
 
-    private volatile int m_targetPositionX = 150;
-    private volatile int m_targetPositionY = 100;
-    
-    private static final double maxVelocity = 0.1; 
-    private static final double maxAngularVelocity = 0.01;
+    protected volatile double m_robotPositionX = 100;
+    protected volatile double m_robotPositionY = 100;
+    protected volatile double m_robotDirection = 0;
+
+    protected volatile int m_targetPositionX = 150;
+    protected volatile int m_targetPositionY = 100;
+
+    protected static final double defaultMaxVelocity = 0.1;
+    protected static double maxVelocity = defaultMaxVelocity;
+    protected static final double defaultMaxAngularVelocity = 0.01;
+    protected static double maxAngularVelocity = defaultMaxAngularVelocity;
     
     public GameVisualizer() 
     {

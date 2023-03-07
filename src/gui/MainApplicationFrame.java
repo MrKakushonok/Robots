@@ -37,7 +37,8 @@ public class MainApplicationFrame extends JFrame
         addWindow(logWindow);
 
         GameWindow gameWindow = new GameWindow();
-        gameWindow.setSize(400,  400);
+        gameWindow.setSize(screenSize.width - 260,  screenSize.height - 100);
+        gameWindow.setLocation(230,10);
         addWindow(gameWindow);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -136,6 +137,115 @@ public class MainApplicationFrame extends JFrame
             testMenu.add(addLogMessageItem);
         }
 
+        JMenu debugMenu = new JMenu("Отладка");
+        debugMenu.setMnemonic(KeyEvent.VK_D);
+        debugMenu.getAccessibleContext().setAccessibleDescription(
+                "Читики");
+
+        {
+            JMenuItem addSpeedItem = new JMenuItem("+Скорость");
+            addSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxVelocity = GameVisualizer.maxVelocity + GameVisualizer.defaultMaxVelocity / 10;
+                String debugMessage = "Скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxVelocity - GameVisualizer.defaultMaxVelocity)
+                                / GameVisualizer.defaultMaxVelocity * 100 )) + "% ("
+                        + String.valueOf(GameVisualizer.maxVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(addSpeedItem);
+        }
+
+        {
+            JMenuItem addSpeedItem = new JMenuItem("++Скорость");
+            addSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxVelocity = GameVisualizer.maxVelocity + GameVisualizer.defaultMaxVelocity;
+                String debugMessage = "Скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxVelocity - GameVisualizer.defaultMaxVelocity)
+                                / GameVisualizer.defaultMaxVelocity * 100 )) + "% ("
+                        + String.valueOf(GameVisualizer.maxVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(addSpeedItem);
+        }
+
+        {
+            JMenuItem removeSpeedItem = new JMenuItem("-Скорость");
+            removeSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxVelocity = GameVisualizer.maxVelocity - GameVisualizer.defaultMaxVelocity / 10;
+                String debugMessage = "Скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxVelocity - GameVisualizer.defaultMaxVelocity)
+                                / GameVisualizer.defaultMaxVelocity * 100 )) + "% ("
+                        + String.valueOf(GameVisualizer.maxVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(removeSpeedItem);
+        }
+
+        {
+            JMenuItem removeSpeedItem = new JMenuItem("--Скорость");
+            removeSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxVelocity = GameVisualizer.maxVelocity - GameVisualizer.defaultMaxVelocity;
+                String debugMessage = "Скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxVelocity - GameVisualizer.defaultMaxVelocity)
+                                / GameVisualizer.defaultMaxVelocity * 100 )) + "% ("
+                        + String.valueOf(GameVisualizer.maxVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(removeSpeedItem);
+        }
+
+        {
+            JMenuItem addAngularSpeedItem = new JMenuItem("+Угловая скорость");
+            addAngularSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxAngularVelocity = GameVisualizer.maxAngularVelocity + GameVisualizer.defaultMaxAngularVelocity / 10;
+                String debugMessage = "Угловая скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxAngularVelocity - GameVisualizer.defaultMaxAngularVelocity)
+                                / GameVisualizer.defaultMaxAngularVelocity * 100 )) + "% "
+                        + String.valueOf(GameVisualizer.maxAngularVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(addAngularSpeedItem);
+        }
+
+        {
+            JMenuItem addAngularSpeedItem = new JMenuItem("++Угловая скорость");
+            addAngularSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxAngularVelocity = GameVisualizer.maxAngularVelocity + GameVisualizer.defaultMaxAngularVelocity;
+                String debugMessage = "Угловая скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxAngularVelocity - GameVisualizer.defaultMaxAngularVelocity)
+                                / GameVisualizer.defaultMaxAngularVelocity * 100 )) + "% ("
+                        + String.valueOf(GameVisualizer.maxAngularVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(addAngularSpeedItem);
+        }
+
+        {
+            JMenuItem addAngularSpeedItem = new JMenuItem("-Угловая скорость");
+            addAngularSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxAngularVelocity = GameVisualizer.maxAngularVelocity - GameVisualizer.defaultMaxAngularVelocity / 10;
+                String debugMessage = "Угловая скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxAngularVelocity - GameVisualizer.defaultMaxAngularVelocity)
+                                / GameVisualizer.defaultMaxAngularVelocity * 100 )) + "% "
+                        + String.valueOf(GameVisualizer.maxAngularVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(addAngularSpeedItem);
+        }
+
+        {
+            JMenuItem addAngularSpeedItem = new JMenuItem("--Угловая скорость");
+            addAngularSpeedItem.addActionListener((event) -> {
+                GameVisualizer.maxAngularVelocity = GameVisualizer.maxAngularVelocity - GameVisualizer.defaultMaxAngularVelocity;
+                String debugMessage = "Угловая скорость: " +
+                        String.valueOf(Math.round( 100 + (GameVisualizer.maxAngularVelocity - GameVisualizer.defaultMaxAngularVelocity)
+                                / GameVisualizer.defaultMaxAngularVelocity * 100 )) + "% "
+                        + String.valueOf(GameVisualizer.maxAngularVelocity) + ")";
+                Logger.debug(debugMessage);
+            });
+            debugMenu.add(addAngularSpeedItem);
+        }
+
         JMenu exitMenu = new JMenu("Закрыть");
         exitMenu.setMnemonic(KeyEvent.VK_E);
         testMenu.getAccessibleContext().setAccessibleDescription(
@@ -152,6 +262,7 @@ public class MainApplicationFrame extends JFrame
 
         menuBar.add(lookAndFeelMenu);
         menuBar.add(testMenu);
+        menuBar.add(debugMenu);
         menuBar.add(exitMenu);
         return menuBar;
     }
