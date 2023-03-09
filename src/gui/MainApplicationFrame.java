@@ -8,6 +8,8 @@ import java.awt.event.WindowAdapter;
 import javax.swing.JOptionPane;
 
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
 
 import log.Logger;
 
@@ -95,64 +97,51 @@ public class MainApplicationFrame extends JFrame
 // 
 //        return menuBar;
 //    }
-    
-    private JMenuBar generateMenuBar()
-    {
-        JMenuBar menuBar = new JMenuBar();
-        
-        JMenu lookAndFeelMenu = new JMenu("Режим отображения");
-        lookAndFeelMenu.setMnemonic(KeyEvent.VK_V);
-        lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(
-                "Управление режимом отображения приложения");
-        
-        {
-            JMenuItem systemLookAndFeel = new JMenuItem("Системная схема", KeyEvent.VK_S);
-            systemLookAndFeel.addActionListener((event) -> {
-                setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                this.invalidate();
-            });
-            lookAndFeelMenu.add(systemLookAndFeel);
-        }
 
-        {
-            JMenuItem crossplatformLookAndFeel = new JMenuItem("Универсальная схема", KeyEvent.VK_S);
-            crossplatformLookAndFeel.addActionListener((event) -> {
-                setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-                this.invalidate();
-            });
-            lookAndFeelMenu.add(crossplatformLookAndFeel);
-        }
+    public SimpleMenuBar generateMenuBar(){
+        SimpleMenuBar menuBar = new SimpleMenuBar();
 
-        JMenu testMenu = new JMenu("Тесты");
-        testMenu.setMnemonic(KeyEvent.VK_T);
-        testMenu.getAccessibleContext().setAccessibleDescription(
-                "Тестовые команды");
-        
-        {
-            JMenuItem addLogMessageItem = new JMenuItem("Сообщение в лог", KeyEvent.VK_S);
-            addLogMessageItem.addActionListener((event) -> {
-                Logger.debug("Новая строка");
-            });
-            testMenu.add(addLogMessageItem);
-        }
-
-        JMenu exitMenu = new JMenu("Закрыть");
-        exitMenu.setMnemonic(KeyEvent.VK_E);
-        testMenu.getAccessibleContext().setAccessibleDescription(
-                "Закрытие приложения");
-
-        {
-            JMenuItem exitAppItem = new JMenuItem("Закрыть приложение", KeyEvent.VK_ESCAPE);
-            exitAppItem.addActionListener((event) -> {
-                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
-                        new WindowEvent(this, WindowEvent.WINDOW_CLOSING));;
-            });
-            exitMenu.add(exitAppItem);
-        }
-
-        menuBar.add(lookAndFeelMenu);
-        menuBar.add(testMenu);
-        menuBar.add(exitMenu);
+        menuBar.generateMenuBar(
+                new SimpleMenu[]{
+                        new SimpleMenu("Режим отображения",
+                                "Управление режимом отображения приложения",
+                                KeyEvent.VK_V
+                        ).generateMenu(new SimpleMenuItem[]{
+                                new SimpleMenuItem("Системная схема",
+                                        KeyEvent.VK_S,
+                                        (event) ->{
+                                            setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                                            this.invalidate();
+                                        }),
+                                new SimpleMenuItem("Универсальная схема",
+                                        KeyEvent.VK_S,
+                                        (event) ->{
+                                            setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+                                            this.invalidate();
+                                        })
+                        }),
+                        new SimpleMenu("Тесты",
+                                "Тестовые команды",
+                                KeyEvent.VK_T
+                        ).generateMenu(new SimpleMenuItem[]{
+                                new SimpleMenuItem("Сообщение в лог",
+                                        KeyEvent.VK_S,
+                                        (event) -> {
+                                            Logger.debug("Новая строка");
+                                        })
+                        }),
+                        new SimpleMenu("Закрыть",
+                                "Закрытие приложения",
+                                KeyEvent.VK_E
+                        ).generateMenu(new SimpleMenuItem[]{
+                                new SimpleMenuItem("Закрыть приложение",
+                                        KeyEvent.VK_ESCAPE,
+                                        (event) -> {
+                                            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
+                                                    new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                                        })
+                        })
+                });
         return menuBar;
     }
     
@@ -183,6 +172,6 @@ public class MainApplicationFrame extends JFrame
         );
         if(response == JOptionPane.YES_OPTION){
             System.exit(0);
-        };
+        }
     }
 }
