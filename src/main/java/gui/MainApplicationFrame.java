@@ -6,11 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import javax.swing.JOptionPane;
-
 import javax.swing.*;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
-
 import log.Logger;
 
 /**
@@ -39,7 +35,8 @@ public class MainApplicationFrame extends JFrame
         addWindow(logWindow);
 
         GameWindow gameWindow = new GameWindow();
-        gameWindow.setSize(400,  400);
+        gameWindow.setLocation(230, 10);
+        gameWindow.setSize(screenSize.width - 250,  screenSize.height - 80);
         addWindow(gameWindow);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -126,9 +123,7 @@ public class MainApplicationFrame extends JFrame
                         ).generateMenu(new SimpleMenuItem[]{
                                 new SimpleMenuItem("Сообщение в лог",
                                         KeyEvent.VK_S,
-                                        (event) -> {
-                                            Logger.debug("Новая строка");
-                                        })
+                                        (event) -> Logger.debug("Новая строка"))
                         }),
                         new SimpleMenu("Закрыть",
                                 "Закрытие приложения",
@@ -136,10 +131,8 @@ public class MainApplicationFrame extends JFrame
                         ).generateMenu(new SimpleMenuItem[]{
                                 new SimpleMenuItem("Закрыть приложение",
                                         KeyEvent.VK_ESCAPE,
-                                        (event) -> {
-                                            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
-                                                    new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-                                        })
+                                        (event) -> Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
+                                                new WindowEvent(this, WindowEvent.WINDOW_CLOSING)))
                         })
                 });
         return menuBar;

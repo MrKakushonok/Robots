@@ -38,4 +38,11 @@ public class Util {
     {
         return (int)(value + 0.5);
     }
+
+    static double angleDifference(double angle1, double angle2){
+        double diff = asNormalizedRadians(angle2) - asNormalizedRadians(angle1);
+        if(Math.abs(diff) < Math.PI) return diff;
+        if(diff >= 0) return diff - 2*Math.PI;
+        return 2*Math.PI + diff;
+    }
 }
